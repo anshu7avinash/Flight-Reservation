@@ -10,8 +10,6 @@ import com.avinash.flightreservation.entities.Reservation;
 import com.avinash.flightreservation.repos.FlightRepository;
 import com.avinash.flightreservation.repos.PassengerRepository;
 import com.avinash.flightreservation.repos.ReservationRepository;
-import com.avinash.flightreservation.util.EmailUtil;
-import com.avinash.flightreservation.util.PDFGenerator;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -24,12 +22,6 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Autowired
 	ReservationRepository reservationRepository;
-	
-	@Autowired
-	PDFGenerator pdfGenerator;
-	
-	@Autowired
-	EmailUtil emailUtil;
 
 	@Override
 	public Reservation bookFlight(ReservationRequest request) {
@@ -61,14 +53,6 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		//inject the reservation into the database
 		Reservation savedReservation = reservationRepository.save(reservation);
-		
-		
-		//send the mail to user with the pdf attachment
-		String filePath = "C:/Users/Abc/Documents/reservations/reservation"+savedReservation.getId()+".pdf";	//attachment kept in this file path
-		pdfGenerator.generateItinerary(savedReservation, filePath);												
-		//generate the attachment - pass the reservation details and file path for attachment
-		
-		emailUtil.sendItinerary(passenger.getEmail(), filePath);
 		
 		return savedReservation;
 	}
