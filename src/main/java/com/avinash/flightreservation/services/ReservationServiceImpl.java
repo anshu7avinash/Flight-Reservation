@@ -2,6 +2,7 @@ package com.avinash.flightreservation.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.avinash.flightreservation.dto.ReservationRequest;
 import com.avinash.flightreservation.entities.Flight;
@@ -32,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
 	EmailUtil emailUtil;
 
 	@Override
+	@Transactional
 	public Reservation bookFlight(ReservationRequest request) {
 
 		//make payment
